@@ -1,0 +1,117 @@
+name: Deploy Lovoj Backend
+
+on:
+  push:
+    branches:
+      - main        # LIVE
+      - testing     # STAGING
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build App
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Prepare Deployment Package
+        run: |
+          mkdir -p deploy
+          cp -r . deploy/
+          rm -rf deploy/node_modules
+          tar -czf deploy.tar.gz -C deploy .
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lovoj-build
+          path: deploy.tar.gz
+          retention-days: 1
+
+  deploy:
+    name: Deploy to EC2
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: lovoj-build
+
+      - name: Deploy to EC2
+        env:
+          HOST: ${{ secrets.EC2_HOST }}
+          USERNAME: ${{ secrets.EC2_USER }}
+          SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+        run: |
+          echo "$SSH_KEY" > key.pem
+          chmod 600 key.pem
+
+          scp -i key.pem -o StrictHostKeyChecking=no deploy.tar.gz $USERNAME@$HOST:/tmp/
+
+          ssh -i key.pem -o StrictHostKeyChecking=no $USERNAME@$HOST << 'EOF'
+            set -e
+
+            cd /var/www/lovoj-backend
+            sudo chown -R $USER:$USER /var/www/lovoj-backend
+
+            # Backup old version
+            mkdir -p backups
+            timestamp=$(date +%Y%m%d_%H%M%S)
+            tar -czf backups/backup_$timestamp.tar.gz . --exclude="backups" || true
+
+            # Extract new files
+            tar -xzf /tmp/deploy.tar.gz -C /var/www/lovoj-backend
+            rm /tmp/deploy.tar.gz
+
+            # Install production deps only
+            npm ci --omit=dev
+
+            mkdir -p logs
+
+            # Detect branch (live or staging)
+            if [[ "$GITHUB_REF_NAME" == "main" ]]; then
+                export NODE_ENV=live
+                APP_NAME="LovojBackendB2BLive"
+            elif [[ "$GITHUB_REF_NAME" == "testing" ]]; then
+                export NODE_ENV=staging
+                APP_NAME="LovojBackendB2BStaging"
+            else
+                echo "Branch not allowed for deployment"
+                exit 1
+            fi
+
+            echo "Deploying to ENV: $NODE_ENV"
+            echo "PM2 App: $APP_NAME"
+
+            # PM2 start / reload
+            if pm2 describe $APP_NAME > /dev/null; then
+                pm2 reload $APP_NAME --update-env
+            else
+                pm2 start server.js --name $APP_NAME
+            fi
+
+            pm2 save
+          EOF
+
+          rm key.pem
+
+      - name: Verify Deploy (optional)
+        env:
+          HOST: ${{ secrets.EC2_HOST }}
+        run: |
+          echo "Waiting..."
+          sleep 6
+          curl -I http://$HOST:4000 || exit 1
