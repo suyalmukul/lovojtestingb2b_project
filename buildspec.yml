@@ -1,16 +1,27 @@
 version: 0.2
+
 phases:
   install:
-    runtime-versions:
-      nodejs: 18
     commands:
+      - echo Installing Node.js...
+      - n 20
       - npm install
+
+  pre_build:
+    commands:
+      - echo Checking Node version...
+      - node -v
+
   build:
     commands:
-      - npm run build
+      - echo Building project...
+      - echo No separate build step needed for Node backend
+
   post_build:
     commands:
-      - echo "Build completed successfully"
+      - echo Build completed successfully
+
 artifacts:
   files:
     - '**/*'
+  discard-paths: no
