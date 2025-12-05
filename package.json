@@ -10,7 +10,8 @@
     "live": "cross-env NODE_ENV=live nodemon server.js",
     "start:stage": "cross-env NODE_ENV=staging node server.js",
     "start-stage-pm2": "cross-env NODE_ENV=staging pm2 start server.js --name 'LovojBackendB2BStaging'",
-    "start-live-pm2": "cross-env NODE_ENV=live pm2 start server.js --name 'LovojBackendB2BLive'"
+    "start-live-pm2": "cross-env NODE_ENV=live pm2 start server.js --name 'LovojBackendB2BLive'",
+    "build": "echo Build step skipped"
   },
   "author": "",
   "license": "ISC",
@@ -66,7 +67,6 @@
     "randomstring": "^1.2.3",
     "razorpay": "^2.9.2",
     "sequelize": "^6.37.7",
-    "server.js": "^1.0.0",
     "sharp": "^0.32.6",
     "socket.io": "^4.6.2",
     "speakeasy": "^2.0.0",
