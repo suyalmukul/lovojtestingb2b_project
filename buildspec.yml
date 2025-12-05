@@ -2,19 +2,21 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      nodejs: 20
     commands:
-      - echo Installing Node.js...
-      - nvm install 20
-      - node -v
-      - npm -v
-      - echo Installing backend dependencies...
-      - cd backend
+      - echo Installing dependencies...
       - npm install
-
+  pre_build:
+    commands:
+      - echo Pre-build phase
   build:
     commands:
+      - echo Build phase
       - npm run build
-
+  post_build:
+    commands:
+      - echo Build completed
 artifacts:
   files:
     - '**/*'
