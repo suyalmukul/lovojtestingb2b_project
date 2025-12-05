@@ -1,0 +1,6 @@
+node_modules/
+test.js
+package-lock.json
+config/serviceAccountKey.json
+config/secretsManager.js
+.env

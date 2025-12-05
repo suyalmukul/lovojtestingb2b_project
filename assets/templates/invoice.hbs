@@ -1,0 +1,425 @@
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoice</title>
+    <link
+      rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/typeface-poppins@1.1.13/index.min.css"
+    />
+    <link
+      rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/fontsource-piazzolla@4.0.0/index.min.css"
+    />
+    </script>
+  </head>
+  <body >
+  <div class="main-wraaper" >
+  <div class="header-wraaper">
+    <div>
+      {{!-- <img
+        class="store-logo"
+        alt="Lovoj Logo"
+        src="https://lovoj.s3.amazonaws.com/uploads/QuickOrderImages/1706787696536.png"
+      /> --}}
+    </div>
+    <div class="store-title">
+      <h1>{{storeName}}</h1>
+      {{storeAddress}}
+      <p>{{.}}</p>
+      {{storeAddress}}
+      <div class="gst-wrapper">
+        <p>GSTIN: {{storeGst}}</p>
+        <h1>TAX INVOICE</h1>
+      </div>
+    </div>
+  </div>
+  <hr color="#969696" />
+  <div class="invoice-wrapper">
+    <div class="p1">
+      <div class="invoice-details">
+        <p>Invoice No.</p>
+        <h1>: {{invoiceNo}}</h1>
+      </div>
+      <div class="invoice-details">
+        <p>Invoice Date</p>
+        <h1>: {{invoiceDate}}</h1>
+      </div>
+      <div class="invoice-details">
+        <p>Delivery Date</p>
+        <h1>: {{deliveryDate}}</h1>
+      </div>
+      <div class="invoice-details">
+        <p>Alteration Date</p>
+        <h1>: {{alterationDate}}</h1>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="p2">
+      <div class="invoice-details">
+        <p>Place of Supply</p>
+        <h1>: {{placeOfSupply}}</h1>
+      </div>
+    </div>
+  </div>
+  <div class="bill-header">
+    <h1>Bill To</h1>
+    <div style="width: 1px; height: 21px; background-color: #969696"></div>
+    <h1>Ship To</h1>
+  </div>
+  <div class="bill-address">
+    <div class="pt1">
+      <h1>{{customerName}}</h1>
+       {{billAddress}}
+      <p>{{.}}</p>
+      {{billAddress}}
+      <p>GSTIN: {{billgst}}</p>
+    </div>
+    <div style="width: 1px; height: 160px; background-color: #969696"></div>
+    <div class="pt2">
+        {{shipAddress}}
+      <p>{{.}}</p>
+      {{shipAddress}}
+      <p>GSTIN: {{shipgst}}</p>
+    </div>
+  </div>
+  <table class="product-table">
+    <tr  class="table-header">
+     <th style="border-left: 0px ;">#</th> 
+      <th>Item & Description</th>
+      <th>HSN/SAC</th>
+      <th>Qty</th>
+      <th>Rate</th>
+      <th>Discount</th>
+      <th colspan="2" >CGST</th>
+      <th colspan="2" >SGST</th>
+      <th>Amount</th>
+    </tr>
+    
+    <!-- {{#products}} -->
+    <tr class="table-items">
+      <td style="border-left: 0px ;">{{no}}</td>
+      <td style="justify-content: center; display: flex; padding: 5px;"><img src="{{image}}" style="border-radius: 2px;" width="15" height="15"></img> {{name}}</td>
+      <td >{{hsnsac}}</td>
+      <td >{{qty}}</td>
+      <td >{{rate}}</td>
+      <td >{{discount}}</td>
+      <td style="padding: 5px;">{{cgs}}</td>
+      <td >{{cgst}}</td>
+       <td style="padding: 5px;">{{sgs}}</td>
+      <td >{{sgst}}</td>
+      <td >{{amount}}</td>
+    </tr>
+    <!-- {{/products}} -->
+  </table>
+  <div class="final-wrapper">
+    <div class="pt1">
+      <p>Total In Wonts</p>
+      <h1>Five Thousand One Hundred Eighty-One and Six Tenths</h1>
+
+      <p>Thank you For the Payment. You Just made our day.</p>
+    </div>
+    <div class="pt2">
+      <div class="amount-item">
+        <p>Sub Total</p>
+        <p>₹{{subTotal}}</p>
+      </div>
+      <div class="amount-item">
+        <p>Delivery Charges</p>
+        <p>₹{{delivery}}</p>
+      </div>
+      <div class="amount-item">
+        <p>Coupon</p>
+        <p>-₹{{coupon}}</p>
+      </div>
+      <div class="amount-item">
+        <p>CGST</p>
+        <p>₹{{cgst}}</p>
+      </div>
+      <div class="amount-item">
+        <p>SGST</p>
+        <p>₹{{sgst}}</p>
+      </div>
+      <div class="amount-item">
+        <p>Total Amount</p>
+        <p>₹{{total}}</p>
+      </div>
+      <div class="amount-item">
+        <p>Payment Advance</p>
+        <p>-₹{{advance}}</p>
+      </div>
+      <div class="amount-item">
+        <h1>Pending Amount</h1>
+        <h1>₹{{pending}}</h1>
+      </div>
+    </div>
+  </div>
+</div>
+   
+  </body>
+ 
+  <style>
+    .main-wraaper {
+  background-color: #fff;
+  border: 1px solid #969696;
+  justify-self: center;
+  width: 556px;
+  flex-shrink: 0;
+}
+#show-invoice {
+  background-color: #fff;
+  border: 1px solid #969696;
+  justify-self: center;
+  width: 556px;
+  flex-shrink: 0;
+}
+.header-wraaper {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  gap: 50px;
+  height: 150px;
+}
+.store-logo {
+  object-fit: contain;
+  width: 110px;
+  height: 100px;
+  justify-self: center;
+}
+.store-title {
+  margin-bottom: 10px;
+}
+ 
+.store-title h1 {
+  color: #000;
+  font-family: Piazzolla;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: uppercase;
+}
+.store-title p {
+  color: rgba(0, 0, 0, 0.7);
+  font-family: Poppins;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  height: 10px;
+}
+.gst-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 60px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.gst-wrapper p {
+  color: rgba(0, 0, 0, 0.7);
+  font-family: Poppins;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+}
+.gst-wrapper h1 {
+  color: #000;
+  font-family: Piazzolla;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+}
+.invoice-wrapper {
+  display: flex;
+  width: 556px;
+  margin-top: -10px;
+  padding-top: 10px;
+  flex-direction: row;
+  border-bottom: 1px solid #969696;
+}
+.invoice-wrapper .p1 {
+  width: 551px/2;
+  height: 50px;
+}
+.invoice-wrapper .p2 {
+  width: 551px/2;
+  height: 50px;
+}
+.invoice-wrapper .invoice-details {
+  display: flex;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 551px/2;
+  flex-direction: row;
+  height: 20px;
+  align-items: center;
+}
+.invoice-wrapper .invoice-details p {
+  color: rgba(0, 0, 0, 0.7);
+  width: 180px;
+  height: 10px;
+  font-family: Poppins;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+}
+.invoice-wrapper .invoice-details h1 {
+  color: #000;
+  font-family: Poppins;
+  font-size: 10px;
+  height: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 15px;
+}
+.invoice-wrapper .divider {
+  height: 100px;
+  width: 1px;
+  margin-top: -10px;
+  background-color: #969696;
+}
+.bill-header {
+  height: 21px;
+  flex-shrink: 0;
+  background-color: #f2f3f5;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid #969696;
+}
+ 
+.bill-header h1 {
+  color: #000;
+  width: 252px;
+  text-align: start;
+  font-family: Poppins;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  padding-left: 10px;
+}
+ 
+.bill-address {
+  display: flex;
+  flex-direction: row;
+}
+ 
+.bill-address .pt1 {
+  padding-left: 10px;
+  width: 252px;
+}
+.bill-address .pt2 {
+  padding-left: 10px;
+}
+ 
+.bill-address h1 {
+  color: #000;
+  font-family: Poppins;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+}
+ 
+.bill-address p {
+  color: rgba(0, 0, 0, 0.7);
+  font-family: Poppins;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+}
+ 
+.product-table {
+  width: 556px;
+  border-spacing: 0px;
+  border-top: 1px solid #969696;
+}
+.product-table .table-header {
+  background-color: #f2f3f5;
+}
+ 
+.product-table .table-header th {
+  padding-left: 10px;
+  padding-right: 10px;
+  color: rgba(0, 0, 0, 0.8);
+  font-family: Poppins;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  border-left: 1px solid #969696;
+  border-bottom: 1px solid #969696;
+  text-transform: uppercase;
+}
+.product-table .table-items {
+  color: rgba(0, 0, 0, 0.7);
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Poppins;
+  font-size: 10.36px;
+  font-style: normal;
+  font-weight: 400;
+}
+.product-table .table-items td {
+  padding-left: 10px;
+  padding-right: 10px;
+  border-left: 1px solid #969696;
+  border-bottom: 1px solid #969696;
+  text-align: center;
+}
+ 
+.final-wrapper {
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid #969696;
+}
+.final-wrapper .pt1 {
+  padding: 10px;
+  width: 300px;
+  color: rgba(0, 0, 0, 0.7);
+  font-family: Poppins;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  border-right: 1px solid #969696;
+}
+.final-wrapper .pt1 p {
+  height: 10px;
+}
+.final-wrapper .pt1 h1 {
+  color: rgba(0, 0, 0, 0.7);
+  font-family: Poppins;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+}
+.final-wrapper .pt2 {
+  margin-bottom: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 250px;
+}
+ 
+.final-wrapper .pt2 .amount-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: rgba(39, 39, 40, 0.7);
+  font-family: Poppins;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  height: 20px;
+}
+ 
+.final-wrapper .pt2 .amount-item h1 {
+  color: var(--Text, #0e0e0e);
+  font-family: Poppins;
+  font-size: 10px;
+  font-style: normal;
+  margin-top: 12px;
+  font-weight: 700;
+}
+ 
+  </style>
+</html>

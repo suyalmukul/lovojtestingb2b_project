@@ -1,0 +1,20 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ec2-user/lovojbackend
+
+hooks:
+  BeforeInstall:
+    - location: deploy/before_install.sh
+      timeout: 300
+      runas: ec2-user
+  ApplicationStart:
+    - location: deploy/start_server.sh
+      timeout: 300
+      runas: ec2-user
+  ApplicationStop:
+    - location: deploy/stop_server.sh
+      timeout: 300
+      runas: ec2-user
+

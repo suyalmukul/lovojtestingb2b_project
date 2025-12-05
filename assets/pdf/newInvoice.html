@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>My Website</title>
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- poppins -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <!-- piozola -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Piazzolla:ital,opsz,wght@0,8..30,100..900;1,8..30,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+</style>
+
+<body>
+  <main style="
+  box-sizing: border-box;
+  position: absolute;
+  left: calc(50% - 556px/2 + 1.5px);
+  top: calc(50% - 799px/2 + 0.5px);
+  border-top: 1px solid #969696;
+  border-left: 1px solid #969696;
+  border-right: 1px solid #969696;
+  ">
+    <div style="
+    display: flex;
+    align-items: center;
+font-family: 'Piazzolla';
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+text-transform: uppercase;
+color: #000000;
+padding: 10px 27px;
+/* margin: 10px 27px; */
+gap: 2rem;
+position: relative;
+  border-bottom: 1px solid #969696;
+
+  ">
+      <!-- <img class="store-logo" src={{storelogo}} alt="logo image"> -->
+      <div>
+        <h4 style="
+        font-family: 'Piazzolla';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        text-transform: uppercase;
+        color: #000000;
+
+        ">{{storeName}}</h4>
+        {{#each storeAddress}}
+        <p style="
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.7);
+        ">{{this}}</p>
+        {{/each}}
+        <p style="
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.7);
+        ">GSTIN: {{storeGst}}</p>
+
+      </div>
+      <div style="position: absolute; right: 10px; bottom: 0px;">
+        <h2 style="
+        font-family: 'Piazzolla';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 24px;
+        color: #000000;
+        ">TAX INVOICE</h2>
+      </div>
+
+    </div>
+    <!-- second -->
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div style="flex: 1; ">
+        <table style="width: 100%; height: 100px;">
+          <tr>
+            <th style="
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 10px;
+            line-height: 15px;
+            color: rgba(0, 0, 0, 0.7);
+            ">Invoice No.</th>
+            <td style="
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 10px;
+            line-height: 15px;
+            color: #000000;
+            ">: {{invoiceNo}}</td>
+          </tr>
+          <tr>
+            <th style="
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 10px;
+            line-height: 15px;
+            color: rgba(0, 0, 0, 0.7);
+            ">Invoice Date</th>
+            <td style="
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 10px;
+            line-height: 15px;
+            color: #000000;
+            ">: {{invoiceDate}}</td>
+          </tr>
+          <tr>
+            <th style="
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 10px;
+            line-height: 15px;
+            color: rgba(0, 0, 0, 0.7);
+            ">Delivery Date</th>
+            <td style="
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 10px;
+            line-height: 15px;
+            color: #000000;
+            ">: {{deliveryDate}}</td>
+          </tr>
+          <tr>
+            <th style="
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 10px;
+            line-height: 15px;
+            color: rgba(0, 0, 0, 0.7);
+            ">Alteration Date</th>
+            <td style="
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 10px;
+            line-height: 15px;
+            color: #000000;
+            ">: {{alterationDate}}</td>
+          </tr>
+        </table>
+        <div style="background-color: #F2F3F5;">
+          <h2 style="
+          font-family: 'Poppins';
+          font-style: normal;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 15px;
+          color: #000000;
+          padding: 4px;
+          border: 1px solid #969696;
+          ">Bill To</h2>
+        </div>
+      </div>
+      <div style="border-left: 1px solid #969696; height: 125px;"></div>
+      <div style="flex: 1;">
+        <table style="width:100%; height: 100px;">
+          <tr>
+            <th style="
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 10px;
+            line-height: 15px;
+            color: rgba(0, 0, 0, 0.7);
+
+            ">Place of Supply</th>
+            <td style="
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 10px;
+            line-height: 15px;
+            color: #000000;
+
+            ">: {{placeOfSupply}}</td>
+          </tr>
+        </table>
+        <div style="background-color: #F2F3F5;">
+          <h2 style="
+          font-family: 'Poppins';
+          font-style: normal;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 15px;
+          color: #000000;
+          padding: 4px;
+          border: 1px solid #969696;
+          ">Ship To</h2>
+        </div>
+      </div>
+
+    </div>
+
+    </div>
+    <!-- third -->
+    <div style="display: flex;">
+      <div style="flex: 1; padding: 10px 9px;">
+        <h5 style="
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 10px;
+        line-height: 15px;
+        color: #000000;
+        ">{{customerName}}</h5>
+        {{#each billAddress}}
+        <p style="
+           font-family: 'Poppins';
+           font-style: normal;
+           font-weight: 400;
+           font-size: 10px;
+           line-height: 15px;
+           color: rgba(0, 0, 0, 0.7);
+       ">{{this}}</p>
+        {{/each}}
+
+
+        <p style="
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 15px;
+        color: rgba(0, 0, 0, 0.7);
+        ">GSTIN: {{billgst}}</p>
+      </div>
+      <div style="border-left: 1px solid #969696; height: 130px;"></div>
+      <div style="flex: 1; padding: 10px 9px;">
+        {{#each shipAddress}}
+        <p style="
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 15px;
+        color: rgba(0, 0, 0, 0.7);
+    ">{{this}}</p>
+        {{/each}}
+
+
+        <p style="
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 15px;
+        color: rgba(0, 0, 0, 0.7);
+        ">GSTIN: {{shipgst}}</p>
+      </div>
+
+    </div>
+    <!-- table -->
+    <table class="product-table">
+    <tr  class="table-header">
+     <th style="border-left: 0px ;">#</th> 
+      <th>Item & Description</th>
+      <th>HSN/SAC</th>
+      <th>Qty</th>
+      <th>Rate</th>
+      <th>Discount</th>
+      <th colspan="2" >CGST</th>
+      <th colspan="2" >SGST</th>
+      <th>Amount</th>
+    </tr>
+    
+    <!-- {{#products}} -->
+    <tr class="table-items">
+      <td style="border-left: 0px ;">{{no}}</td>
+      <td style="justify-content: center; display: flex; padding: 5px;"><img src={{image}} style="border-radius: 2px;" width="15" height="15"></img> {{name}}</td>
+      <td >{{hsnsac}}</td>
+      <td >{{qty}}</td>
+      <td >{{rate}}</td>
+      <td >{{discount}}</td>
+      <td style="padding: 5px;">{{cgs}}</td>
+      <td >{{cgst}}</td>
+       <td style="padding: 5px;">{{sgs}}</td>
+      <td >{{sgst}}</td>
+      <td >{{amount}}</td>
+    </tr>
+    <!-- {{/products}} -->
+  </table>
+
+    <!-- footer -->
+<div style="display: flex; ">
+      <div style="flex: 3; position:relative; padding: 5px; border: 1px solid #969696;">
+        <p style="
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 15px;
+        color: rgba(0, 0, 0, 0.7);
+        ">Total In Wonts</p>
+        <p style="
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 10px;
+        line-height: 15px;
+        color: rgba(0, 0, 0, 0.7);
+
+        ">Five Thousand One Hundred Eighty-One and Six Tenths</p>
+        <p style="
+        margin: 20px 0px;
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 15px;
+        color: rgba(0, 0, 0, 0.7);
+
+        ">Thank you For the Payment. You Just made our day.</p>
+          <div style="position:absolute; bottom:10px; right:10px;">
+            <img class="store-signature" src={{signature}} alt="logo image" >
+            <h4 style="
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 15px;
+        color: rgba(0, 0, 0, 0.7);
+              ">Authorized Signatory</h4>
+          </div>
+      </div>
+      <div style="flex:2;">
+        <table style="width:100%; border: 1px solid #969696; ">
+          <tr style="
+          display: flex;
+          padding: 5px;
+          align-items: center;
+          justify-content: space-between;
+          font-family: 'Poppins';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 10px;
+          line-height: 200%;
+          color: rgba(39, 39, 40, 0.7);
+
+          ">
+            <td>Sub Total </td>
+            <td>₹{{subTotal}}</td>
+          </tr>
+          <tr style="
+          display: flex;
+          padding: 5px;
+          align-items: center;
+          justify-content: space-between;
+          font-family: 'Poppins';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 10px;
+          line-height: 200%;
+          color: rgba(39, 39, 40, 0.7);
+
+          ">
+            <td>Delivery Charges</td>
+            <td>₹{{delivery}}</td>
+          </tr>
+          <tr style="
+          display: flex;
+          padding: 5px;
+          align-items: center;
+          justify-content: space-between;
+          font-family: 'Poppins';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 10px;
+          line-height: 200%;
+          color: rgba(39, 39, 40, 0.7);
+
+          ">
+            <td>Coupon</td>
+            <td>-₹{{coupon}}</td>
+          </tr>
+          <tr style="
+          display: flex;
+          padding: 5px;
+          align-items: center;
+          justify-content: space-between;
+          font-family: 'Poppins';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 10px;
+          line-height: 200%;
+          color: rgba(39, 39, 40, 0.7);
+
+          ">
+            <td>CGST</td>
+            <td>₹{{cgst}}</td>
+          </tr>
+          <tr style="
+          display: flex;
+          padding: 5px;
+          align-items: center;
+          justify-content: space-between;
+          font-family: 'Poppins';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 10px;
+          line-height: 200%;
+          color: rgba(39, 39, 40, 0.7);
+
+          ">
+            <td>SGST</td>
+            <td>₹{{sgst}}</td>
+          </tr>
+          <tr style="
+          display: flex;
+          padding: 5px;
+          align-items: center;
+          justify-content: space-between;
+          font-family: 'Poppins';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 10px;
+          line-height: 200%;
+          color: rgba(39, 39, 40, 0.7);
+
+          ">
+            <td>Total Amount</td>
+            <td>₹{{total}}</td>
+          </tr>
+
+          <tr style="
+          display: flex;
+          padding: 5px;
+          align-items: center;
+          justify-content: space-between;
+          font-family: 'Poppins';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 10px;
+          line-height: 200%;
+          color: rgba(39, 39, 40, 0.7);
+
+          ">
+            <td>Payment Advance</td>
+            <td>-₹{{advance}}</td>
+          </tr>
+          <tr style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 5px;
+          font-family: 'Poppins';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 10px;
+          color: #0E0E0E;
+          ">
+            <td>Pending Amount</td>
+            <td>₹{{pending}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </main>
+
+
+
+
+</body>
+
+</html>
+
+<style>
+.store-logo {
+  object-fit: contain;
+  width: 110px;
+  height: 100px;
+  justify-self: center;
+}
+.store-signature {
+  object-fit: contain;
+  width: 110px;
+  /* height: 30px; */
+  justify-self: center;
+}
+
+.product-table {
+  width: 55px;
+  border-spacing: 0px;
+  border-top: 1px solid #969696;
+}
+.product-table .table-header {
+  background-color: #f2f3f5;
+}
+ 
+.product-table .table-header th {
+  padding-left: 10px;
+  padding-right: 10px;
+  color: rgba(0, 0, 0, 0.8);
+  font-family: Poppins;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  border-left: 1px solid #969696;
+  border-bottom: 1px solid #969696;
+  text-transform: uppercase;
+}
+.product-table .table-items {
+  color: rgba(0, 0, 0, 0.7);
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Poppins;
+  font-size: 10.36px;
+  font-style: normal;
+  font-weight: 400;
+}
+.product-table .table-items td {
+  padding-left: 10px;
+  padding-right: 10px;
+  border-left: 1px solid #969696;
+  border-bottom: 1px solid #969696;
+  text-align: center;
+}
+
+</style>

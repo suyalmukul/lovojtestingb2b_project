@@ -1,0 +1,1078 @@
+openapi: 3.0.0
+info:
+  title: Lovoj Backend Access
+  description: |
+    Swagger UI is a powerful platform designed for testing and exploring APIs (Application Programming Interfaces).
+    APIs serve as the communication channels that allow different software applications or systems to interact and exchange data.
+    These APIs can be used to access various functionalities or retrieve data from a server or web service.It provides a user-friendly
+    and interactive interface that allows developers, testers, and other stakeholders to interact with APIs without having to write
+    complex code or use external tools.
+
+    It offers a visually appealing, web-based interface where users can quickly access and comprehend API functionality.
+    One of the key functionalities of Swagger UI is its ability to facilitate API testing.
+    Developers can send sample requests to the API directly through the UI and observe the responses, ensuring that
+    the API behaves as expected and returns the correct results. This helps in early detection of bugs and
+    ensures the API functions correctly before integrating it into a larger system.
+  version: 1.0.0
+  contact:
+    email: mukul@lovoj.com
+  license:
+    name: Apache 2.0
+    url: "http://www.apache.org/licenses/LICENSE"
+servers:
+  - url: "http://localhost:5001"
+    description: This is the local server base URL
+  - url: "https://fabricssoftware.com"
+    description: This is the live server base URL
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: "apiKey"
+      in: "header"
+      name: "Authorization"
+      description: Bearer token in the format write Bearer and then paste token "eg:(Bearer'{token}'')"
+security:
+  - ApiKeyAuth: []
+schemes: [http, https]
+
+tags:
+  - name: Server API
+    description: Endpoints related to server health check
+  - name: Splash Screen API
+    description: Endpoints related to splash screen
+  - name: Authentication API
+    description: Endpoints related to user login and authentication
+  - name: Personal Profile API's
+    description: Endpoints related to user profile data retrieval
+  - name: Fabric API
+    description: Endpoints related fetching data of fabric
+  - name: Store API
+    description: Endpoints related fetching store data
+
+paths:
+  # ............................SERVER API...................................................#
+  /:
+    get:
+      tags:
+        - Server API
+      summary: "This API is used for checking that server is working or not"
+      description: Checking that server is working or not
+      responses:
+        200:
+          description: Response Successfull with status code 200
+          schema:
+            type: string
+            example: "API Responsing"
+        400:
+          description: Error response of status code 400
+          schema:
+            type: String
+            example: "API Error"
+
+  # ............................SPLASH SCREEN API's.............................................#
+  /api/v1/onboard/fetchingAllOnboardingContent:
+    get:
+      tags:
+        - Splash Screen API
+      summary: "API endpoint for fetching all onBoard Data"
+      responses:
+        200:
+          description: Response Successfull with status code 200
+          schema:
+            type: object
+            example: "API Responsing"
+        400:
+          description: Error response of status code 400
+          schema:
+            type: String
+            example: "API Error"
+
+  /api/v1/onboard/addingappraelcontent:
+    post:
+      tags:
+        - Splash Screen API
+      summary: API endpoint for adding splash screen data.
+      description: This POST API endpoint will add data for splash screen page (APPRAEL CONTENT).
+      produces:
+        - multipart/form-data
+      consumes:
+        - multipart/form-data
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - apparelHeading
+                - apprarelSubHeading
+                - apparelImage
+              properties:
+                apparelHeading:
+                  type: string
+                apprarelSubHeading:
+                  type: string
+                apparelImage:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: OTP send successfully. Please check your email.
+        "401":
+          description: Please enter the vail email.
+        "500":
+          description: Server Error
+
+    put:
+      tags:
+        - Splash Screen API
+      summary: API endpoint for updating apparel data of the onboard section
+      description: |
+        - To update apparel data, you must provide the _id in the request body.
+        - Add the onboard apparel data to update the apparel section.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: string
+                  format: ObjectId
+                  example: "0000000000000000000"
+                apparelHeading:
+                  type: string
+                apprarelSubHeading:
+                  type: string
+                apparelImage:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Data updated successfully with status code 200
+        "400":
+          description: Invalid input or unable to update data with status code 400
+
+  /api/v1/onboard/addingcreditcontent:
+    post:
+      tags:
+        - Splash Screen API
+      summary: API endpoint for adding splash screen data.
+      description: This POST API endpoint will add data for splash screen page (CREDIT LIMIT CONTENT).
+      produces:
+        - multipart/form-data
+      consumes:
+        - multipart/form-data
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - creditLimitHeading
+                - creditLimitSubHeading
+                - creditLimitImage
+              properties:
+                creditLimitHeading:
+                  type: string
+                creditLimitSubHeading:
+                  type: string
+                creditLimitImage:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: OTP send successfully. Please check your email.
+        "401":
+          description: Please enter the vail email.
+        "500":
+          description: Server Error
+
+    put:
+      tags:
+        - Splash Screen API
+      summary: API endpoint for updating credit limit data of the onboard section
+      description: |
+        - To update credit limit data, you must provide the _id in the request body.
+        - Add the onboard credit limit data to update the credit limit section.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: string
+                  format: ObjectId
+                  example: "0000000000000000000"
+                creditLimitHeading:
+                  type: string
+                creditLimitSubHeading:
+                  type: string
+                creditLimitImage:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Data updated successfully with status code 200
+        "400":
+          description: Invalid input or unable to update data with status code 400
+
+  /api/v1/onboard/addingfastdeliverycontent:
+    post:
+      tags:
+        - Splash Screen API
+      summary: API endpoint for adding splash screen data.
+      description: This POST API endpoint will add data for splash screen page (FAST DELIVERY CONTENT).
+      produces:
+        - multipart/form-data
+      consumes:
+        - multipart/form-data
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - fastDeliveryHeading
+                - fastDeliverySubHeading
+                - fastDeliveryImage
+              properties:
+                fastDeliveryHeading:
+                  type: string
+                fastDeliverySubHeading:
+                  type: string
+                fastDeliveryImage:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: OTP send successfully. Please check your email.
+        "401":
+          description: Please enter the vail email.
+        "500":
+          description: Server Error
+
+    put:
+      tags:
+        - Splash Screen API
+      summary: API endpoint for updating fast delivery data of the onboard section
+      description: |
+        - To update fast delivery data, you must provide the _id in the request body.
+        - Add the onboard fast delivery data to update the fast delivery section.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: string
+                  format: ObjectId
+                  example: "0000000000000000000"
+                fastDeliveryHeading:
+                  type: string
+                fastDeliverySubHeading:
+                  type: string
+                fastDeliveryImage:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Data updated successfully with status code 200
+        "400":
+          description: Invalid input or unable to update data with status code 400
+
+  # ............................AUTH API (CHECKMAIL).............................................#
+
+  /api/v1/auth/checkemail:
+    post:
+      tags:
+        - Authentication API
+      summary: API endpoint for checking email is valid or not for user
+      description: While entering the email it will send you an otp to your email.
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+      responses:
+        "200":
+          description: OTP send successfully. Please check your email.
+        "401":
+          description: Please enter the vail email.
+        "500":
+          description: Server Error
+
+  # ............................AUTH API (CREATE STORE).............................................#
+
+  /api/v1/auth/createStore:
+    post:
+      tags:
+        - Authentication API
+      summary: API endpoint for creating new store
+      produces:
+        - multipart/form-data
+      consumes:
+        - multipart/form-data
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - name
+                - otp_key
+                - email
+                - storeType
+                - password
+                - mobileNumber
+              properties:
+                name:
+                  type: string
+                otp_key:
+                  type: number
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                storeType:
+                  type: string
+                password:
+                  type: string
+                  example: secret_password
+                mobileNumber:
+                  type: number
+                storeHeading:
+                  type: string
+                storeDescription:
+                  type: string
+                storeImage:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Successful login
+        "401":
+          description: Unauthorized - Invalid credentials
+        "500":
+          description: Server Error
+
+  # ............................AUTH API (LOGIN).............................................#
+
+  /api/v1/auth/login:
+    post:
+      tags:
+        - Authentication API
+      summary: API endpoint for user login
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+                - role
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                password:
+                  type: string
+                  example: secret_password
+                role:
+                  type: string
+                  example: user
+      responses:
+        "200":
+          description: Successful login
+        "401":
+          description: Unauthorized - Invalid credentials
+        "500":
+          description: Server Error
+
+  # ............................AUTH API (FORGET PASSWORD).............................................#
+
+  /api/v1/auth/forgot-password:
+    post:
+      tags:
+        - Authentication API
+      summary: API endpoint for forget -password
+      description: While entering the email it will send you an otp to your email for updating new password.
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+      responses:
+        "200":
+          description: OTP send successfully. Please check your email.
+        "401":
+          description: Please enter the vail email.
+        "500":
+          description: Server Error
+
+  # ............................AUTH API (LOGIN UPDATE PASSWORD).............................................#
+
+  /api/v1/auth/reset-passwordd:
+    post:
+      tags:
+        - Authentication API
+      summary: API endpoint for sending reseting your password
+      description: This API will help you to reseting password for user.
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - otp
+                - password
+              properties:
+                otp:
+                  type: number
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Password reset successfully
+        "401":
+          description: Invalid OTP or Missing required parameters.
+        "500":
+          description: Server Error
+
+  # ............................AUTH API (RESEND OTP).............................................#
+
+  /api/v1/auth/resendOTP:
+    post:
+      tags:
+        - Authentication API
+      summary: API endpoint for checking email is valid or not for user
+      description: While entering the email it will send you an otp to your email.
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+      responses:
+        "200":
+          description: OTP send successfully. Please check your email.
+        "401":
+          description: Please enter the vail email.
+        "500":
+          description: Server Error
+
+  # ............................GET PERSONAL PROFILE API.....................................#
+
+  /api/v1/profile/getpersonaldetails:
+    get:
+      tags:
+        - Personal Profile API's
+      summary: API endpoint for fetching all data of user profile
+      description: |
+        - To access user data, you must enter the user ID in the parameter of the input below.
+        - Log in using the authentication section above to generate the user ID.
+        - Add the user data to the user profile section to view the data of the specified user.
+        - Note: All access to these parts requires an Authorization Token, which is obtained upon successful login.
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: user
+          schema:
+            type: string
+            format: ObjectId
+            example: "0000000000000000000"
+            description: The unique identifier (ObjectId) of the user. Must be a 24-character hexadecimal string.
+          required: true
+          description: The unique identifier (ObjectId) of the user. Must be a 24-character hexadecimal string.
+      responses:
+        "200":
+          description: Fetching data with status code 200
+        "400":
+          description: Not able to Fetch data with status code 400
+
+  # ............................POST&PUT API FOR PERSONAL PROFILE............................#
+
+  /api/v1/profile/personaldetails:
+    post:
+      tags:
+        - Personal Profile API's
+      summary: API endpoint for adding user's personal details after logged in
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - phoneNumber
+                - ownerAddress1
+                - ownerAddress2
+                - ownerCityName
+                - ownerAreaPinCode
+                - uploadAdharCardFront
+                - uploadAdharCardBack
+                - uploadPassport
+                - uploadResidence
+                - Nominee
+                - NomineePhoneNumber
+                - NomineeAdharNumber
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                phoneNumber:
+                  type: number
+                ownerAddress1:
+                  type: string
+                ownerAddress2:
+                  type: string
+                ownerCityName:
+                  type: string
+                ownerAreaPinCode:
+                  type: number
+                uploadAdharCardFront:
+                  type: string
+                  format: binary
+                uploadAdharCardBack:
+                  type: string
+                  format: binary
+                uploadPassport:
+                  type: string
+                  format: binary
+                uploadResidence:
+                  type: string
+                  format: binary
+                Nominee:
+                  type: string
+                NomineePhoneNumber:
+                  type: number
+                NomineeAdharNumber:
+                  type: number
+      responses:
+        "200":
+          description: Successful login
+        "401":
+          description: Unauthorized - Invalid credentials
+        "500":
+          description: Server Error
+
+    put:
+      tags:
+        - Personal Profile API's
+      summary: API endpoint for updating user's personal details
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                phoneNumber:
+                  type: number
+                ownerAddress1:
+                  type: string
+                ownerAddress2:
+                  type: string
+                ownerCityName:
+                  type: string
+                ownerAreaPinCode:
+                  type: number
+                uploadAdharCardFront:
+                  type: string
+                  format: binary
+                uploadAdharCardBack:
+                  type: string
+                  format: binary
+                uploadPassport:
+                  type: string
+                  format: binary
+                uploadResidence:
+                  type: string
+                  format: binary
+                Nominee:
+                  type: string
+                NomineePhoneNumber:
+                  type: number
+                NomineeAdharNumber:
+                  type: number
+      responses:
+        "200":
+          description: Successful login
+        "401":
+          description: Unauthorized - Invalid credentials
+        "500":
+          description: Server Error
+
+  /api/v1/profile/businessdetails:
+    post:
+      tags:
+        - Personal Profile API's
+      summary: API endpoint for adding user's business details after logged in
+      produces:
+        - multipart/form-data
+      consumes:
+        - multipart/form-data
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - phoneNumber
+                - ownerAddress1
+                - ownerAddress2
+                - ownerCityName
+                - ownerAreaPinCode
+                - uploadAdharCardFront
+                - uploadAdharCardBack
+                - uploadPassport
+                - uploadResidence
+                - Nominee
+                - NomineePhoneNumber
+                - NomineeAdharNumber
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                phoneNumber:
+                  type: number
+                ownerAddress1:
+                  type: string
+                ownerAddress2:
+                  type: string
+                ownerCityName:
+                  type: string
+                ownerAreaPinCode:
+                  type: number
+                uploadAdharCardFront:
+                  type: string
+                  format: binary
+                uploadAdharCardBack:
+                  type: string
+                  format: binary
+                uploadPassport:
+                  type: string
+                  format: binary
+                uploadResidence:
+                  type: string
+                  format: binary
+                Nominee:
+                  type: string
+                NomineePhoneNumber:
+                  type: number
+                NomineeAdharNumber:
+                  type: number
+      responses:
+        "200":
+          description: Successful login
+        "401":
+          description: Unauthorized - Invalid credentials
+        "500":
+          description: Server Error
+
+    put:
+      tags:
+        - Personal Profile API's
+      summary: API endpoint for updating user's personal details
+      produces:
+        - multipart/form-data
+      consumes:
+        - multipart/form-data
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                phoneNumber:
+                  type: number
+                ownerAddress1:
+                  type: string
+                ownerAddress2:
+                  type: string
+                ownerCityName:
+                  type: string
+                ownerAreaPinCode:
+                  type: number
+                uploadAdharCardFront:
+                  type: string
+                  format: binary
+                uploadAdharCardBack:
+                  type: string
+                  format: binary
+                uploadPassport:
+                  type: string
+                  format: binary
+                uploadResidence:
+                  type: string
+                  format: binary
+                Nominee:
+                  type: string
+                NomineePhoneNumber:
+                  type: number
+                NomineeAdharNumber:
+                  type: number
+      responses:
+        "200":
+          description: Successful login
+        "401":
+          description: Unauthorized - Invalid credentials
+        "500":
+          description: Server Error
+
+  /api/v1/profile/profileImage:
+    post:
+      tags:
+        - Personal Profile API's
+      summary: API endpoint for adding profile Image
+      produces:
+        - multipart/form-data
+      consumes:
+        - multipart/form-data
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - imageUrl
+              properties:
+                imageUrl:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Successful Upload Image
+        "401":
+          description: Not able to upload image
+        "500":
+          description: Server Error
+
+    put:
+      tags:
+        - Personal Profile API's
+      summary: API endpoint for updating profile Image
+      produces:
+        - multipart/form-data
+      consumes:
+        - multipart/form-data
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - imageUrl
+              properties:
+                imageUrl:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Successful Update Image
+        "401":
+          description: Not able to update image
+        "500":
+          description: Server Error
+
+  /api/v1/profile/signatureImage:
+    post:
+      tags:
+        - Personal Profile API's
+      summary: API endpoint for adding signature Image
+      produces:
+        - multipart/form-data
+      consumes:
+        - multipart/form-data
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - imageUrl
+              properties:
+                imageUrl:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Successful Upload signature Image
+        "401":
+          description: Not able to upload signature Image
+        "500":
+          description: Server Error
+
+    put:
+      tags:
+        - Personal Profile API's
+      summary: API endpoint for updating profile signature Image
+      produces:
+        - multipart/form-data
+      consumes:
+        - multipart/form-data
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - imageUrl
+              properties:
+                imageUrl:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Successful Update signature Image
+        "401":
+          description: Not able to update signature Image
+        "500":
+          description: Server Error
+
+  /api/v1/profile/factoryProfile:
+    post:
+      tags:
+        - Personal Profile API's
+      summary: API endpoint for adding factory Profile
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - factoryEmail
+              properties:
+                factoryEmail:
+                  type: string
+                  format: email
+                  example: user@example.com
+      responses:
+        "200":
+          description: Successful Upload factory Profile
+        "401":
+          description: Not able to upload factory Profile
+        "500":
+          description: Server Error
+
+    put:
+      tags:
+        - Personal Profile API's
+      summary: API endpoint for updating factory Profile
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - factoryEmail
+              properties:
+                factoryEmail:
+                  type: string
+                  format: email
+                  example: user@example.com
+      responses:
+        "200":
+          description: Successful updating factory Profile
+        "401":
+          description: Not able to updating factory Profile
+        "500":
+          description: Server Error
+
+  /api/v1/profile/password:
+    post:
+      tags:
+        - Personal Profile API's
+      summary: API endpoint for changing password
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - currentPassword
+                - newPassword
+              properties:
+                currentPassword:
+                  type: string
+                newPassword:
+                  type: string
+      responses:
+        "200":
+          description: Successful changed password
+        "401":
+          description: Not able to change password
+        "500":
+          description: Server Error
+
+  # ............................FABRIC API (FOR FETCHING FABRIC & FETCHED PARAMS BY GETTING SEARCH FILTER).............................................#
+
+  /api/v1/fabric/getFabric:
+    get:
+      tags:
+        - Fabric API
+      summary: API endpoint for fetching all fabric data.
+      description: |
+        - With the help of this API, you can fetch all fabric details at once.
+        - You can also fetch the fabric details with the help of filters by entering the dynamic search parameters below.
+        - Add the fabric details to view the data of the specified fabric or all fabrics.
+        - Note: All access to these parts requires an Authorization Token, which is obtained upon successful login.
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: dynamicSearchParams
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Parameter name for dynamic search
+                value:
+                  type: string
+                  description: Value for dynamic search parameter
+            description: Dynamic query parameter to add additional fields
+          example:
+            - key: value
+      responses:
+        "200":
+          description: Fetching data with status code 200
+        "400":
+          description: Not able to Fetch data with status code 400
+
+  # ............................STORE API (FETCHING STORES)...................................#
+
+  /api/v1/auth/stores:
+    get:
+      tags:
+        - Store API
+      summary: API endpoint for fetching store data
+      description: |
+        - To access store data, you need to login first and then need to paste the bearer token in Authorize section.
+        - Note: To access the part requires an Authorization Token, which is obtained upon successful login.
+      responses:
+        "200":
+          description: Fetching data with status code 200
+        "400":
+          description: Not able to Fetch data with status code 400
