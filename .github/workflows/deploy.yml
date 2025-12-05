@@ -106,7 +106,7 @@ jobs:
             pm2 save
           EOF
 
-          rm key.pem
+          rm key.pem 
 
       - name: Verify Deploy (optional)
         env:
