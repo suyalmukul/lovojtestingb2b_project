@@ -2,26 +2,26 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      nodejs: 20
     commands:
-      - echo Installing Node.js...
-      - n 20
+      - echo Installing dependencies...
       - npm install
 
   pre_build:
     commands:
-      - echo Checking Node version...
+      - echo Node version:
       - node -v
 
   build:
     commands:
-      - echo Building project...
-      - echo No separate build step needed for Node backend
+      - echo No build step needed for Node backend
 
   post_build:
     commands:
-      - echo Build completed successfully
+      - echo Zipping application...
+      - zip -r app.zip . -x "*.git*"
 
 artifacts:
   files:
-    - '**/*'
-  discard-paths: no
+    - app.zip
