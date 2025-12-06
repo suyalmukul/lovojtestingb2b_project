@@ -26,7 +26,6 @@ phases:
   post_build:
     commands:
       - echo Build completed successfully
-      - echo "Make deploy scripts executable"
       - chmod +x deploy/restart_pm2.sh || true
 
 artifacts:
@@ -35,6 +34,43 @@ artifacts:
   discard-paths: no
   exclude-paths:
     - 'node_modules/**/*'
+version: 0.2
+
+env:
+  variables:
+    DEFAULT_ENV: "staging"
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - echo Installing dependencies
+      - npm ci
+  pre_build:
+    commands:
+      - echo "Pre-build phase"
+      - echo "Source version: $CODEBUILD_SOURCE_VERSION"
+      - BRANCH_NAME=$(echo $CODEBUILD_SOURCE_VERSION | awk -F/ '{print $3}')
+      - echo "Branch detected: $BRANCH_NAME"
+      - 'if [ "$BRANCH_NAME" = "staging" ]; then echo "staging" > deploy/env.txt; elif [ "$BRANCH_NAME" = "live" ] || [ "$BRANCH_NAME" = "master" ] || [ "$BRANCH_NAME" = "main" ]; then echo "live" > deploy/env.txt; else echo "$DEFAULT_ENV" > deploy/env.txt; fi'
+      - cat deploy/env.txt
+  build:
+    commands:
+      - echo "Build phase"
+      - npm run build || echo "no build script or build failed (continuing)"
+  post_build:
+    commands:
+      - echo Build completed successfully
+      - chmod +x deploy/restart_pm2.sh || true
+
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: no
+  exclude-paths:
+    - 'node_modules/**/*'
+
 version: 0.2
 
 env:
