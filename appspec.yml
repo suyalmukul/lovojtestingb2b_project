@@ -15,6 +15,11 @@ hooks:
       timeout: 300
       runas: ec2-user
 
+  AfterInstall:
+    - location: deploy/restart_pm2.sh
+      timeout: 300
+      runas: ec2-user
+
   ApplicationStart:
     - location: deploy/start_server.sh
       timeout: 300
