@@ -16,6 +16,8 @@ phases:
     commands:
       - echo Build completed successfully
   
-artificats:
+artifacts:
   files:
-    - /var/www/code/
+    - '**/*'
+  exclude-paths:
+    - 'node_modules/**/*'
