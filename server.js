@@ -26,12 +26,11 @@ if (fs.existsSync(secretsManagerPath)) {
 async function startServer() {
     // Try to get secrets if secretsManager is available, but don't fail if it's not
     if (getSecrets) {
-        try {
-            await getSecrets(SECRET_NAME);
+        const secretsLoaded = await getSecrets(SECRET_NAME);
+        if (secretsLoaded) {
             console.log(colors.green("✅ Secrets loaded from AWS Secrets Manager"));
-        } catch (err) {
-            console.warn(colors.yellow("⚠️  Warning: Could not load secrets from AWS Secrets Manager. Continuing with existing environment variables."));
-            console.warn(colors.yellow("   Error:"), err.message);
+        } else {
+            console.log(colors.yellow("ℹ️  Using environment variables directly (AWS Secrets Manager not available or not configured)"));
         }
     }
     
